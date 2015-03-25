@@ -1,0 +1,30 @@
+﻿一、 命名：
+	1、 ajax提交动作统一命名：
+		1.1、 添加：业务名称+Add
+		1.2、 修改：业务名称+Update
+		1.3、 删除（有记录，实际为修改状态）：业务名称+Delete
+		1.4、 移除（实际删除。彻底删除记录）：业务名称+Remove
+		1.5、 获取数据列表：Get+业务名称+List
+		1.6、 获取某一条记录：Get+业务名称+Item
+			/************************************************************
+			1.5、 获取数据列表：Get+业务名称+List
+			1.6、 获取自己有关的数据列表：GetMy+业务名称+List
+			1.7、 获取某一条记录：Get+业务名称+Item
+			1.8、 获取某一条记录（必须为自己有关的）：GetMy+业务名称+Item
+			************************************************************/
+	2、 权限判断
+		2.1、 js端：json返回数据data.提交动作命名 是否true
+		2.2、 C#端：判断用户角色是否含有某权限，并查找权限列表Yo_Jurisdiction中字段ActionName
+
+	3、 权限命名
+		3.1、 业务可添加：业务名称+Add IsLock = true
+		3.2、 业务可修改：业务名称+Update IsLock = true
+		3.3、 业务可删除（有记录，实际为修改状态）：业务名称+Delete IsLock = true
+		3.4、 业务可移除（实际删除。彻底删除记录）：业务名称+Remove IsLock = true
+		3.5、 可浏览个人相关记录：GetMy+业务名称+Data IsLock = true
+		3.6、 可浏览个人所在部门的相关记录：GetGroup+业务名称+Data IsLock = true
+		3.7、 可浏览所有记录：GetAll+业务名称+Data IsLock = true
+		3.8、 可浏览统计记录：GetCount IsLock = true
+		3.9、 可浏览历史记录：GetHistory IsLock = true
+
+
