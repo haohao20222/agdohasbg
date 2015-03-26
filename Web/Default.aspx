@@ -62,7 +62,7 @@
                 </ul>
             </div>
 
-            <div title="订单信息" data-options="iconCls:'icon-ok'" style="overflow: auto;" id="Div2" runat="server">
+            <div title="订单信息" data-options="iconCls:'icon-ok',selected:true" style="overflow: auto;" id="Div2" runat="server">
                 <ul class="easyui-tree">
                     <li><a href="javascript:;" onclick="addPagePanel('客户订单','shop/ProductManager.aspx')">
                         客户订单</a></li>
@@ -95,8 +95,10 @@
             
             <div title="系统管理" data-options="iconCls:'icon-ok'" id="Div4" runat="server">
                 <ul class="easyui-tree">
-                    <li><span>员工账号</span>
+                    <li><span>组织结构</span>
                         <ul>
+                            <li><a href="javascript:;" onclick="addPagePanel('部门设置','shop/ProductManager.aspx')">
+                                部门设置</a></li>
                             <li><a href="javascript:;" onclick="addPagePanel('员工账号','shop/ProductManager.aspx')">
                                 员工账号</a></li>
                             <li><a href="javascript:;" onclick="addPagePanel('添加账号','shop/AddProduct.aspx')">
@@ -106,8 +108,11 @@
                     <li><span>权限设置</span>
                         <ul>
                             <li><a href="javascript:;" onclick="addPagePanel('角色','Notice/NoticeManager.aspx')">
-                                角色</a></li>
+                                角色权限</a></li>
                         </ul>
+                     </li>
+                     <li><a href="javascript:;" onclick="addPagePanel('公告信息','Notice/NoticeManager.aspx')">
+                                公告信息</a>
                      </li>
                 </ul>
             </div>
@@ -119,6 +124,9 @@
     <div data-options="region:'center',title:'我的工作台'">
         <div id="tt" class="easyui-tabs" data-options="tools:'#tab-tools'" style="width: 100%;
             height: 100%">
+            <div title="主页" style="padding:10px;">
+			    index
+		    </div>
         </div>
     </div>
 </body>

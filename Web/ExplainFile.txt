@@ -27,4 +27,7 @@
 		3.8、 可浏览统计记录：GetCount IsLock = true
 		3.9、 可浏览历史记录：GetHistory IsLock = true
 
+	4、 页面节点权限判断
+		4.1、 
+
 
