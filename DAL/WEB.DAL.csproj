@@ -4,14 +4,14 @@
     <ProjectType>Local</ProjectType>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E3D8759A-C5EB-402D-9F10-F5C6029A8D1A}</ProjectGuid>
+    <ProjectGuid>{9FE00521-3A8B-42B1-814E-585E99407B2E}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ApplicationIcon>
     </ApplicationIcon>
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
-    <AssemblyName>YS_WEB.Common</AssemblyName>
+    <AssemblyName>Maticsoft.DAL</AssemblyName>
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
     <DefaultClientScript>JScript</DefaultClientScript>
@@ -19,7 +19,7 @@
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
     <DelaySign>false</DelaySign>
     <OutputType>Library</OutputType>
-    <RootNamespace>YS_WEB.Common</RootNamespace>
+    <RootNamespace>Maticsoft.DAL</RootNamespace>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <StartupObject>
     </StartupObject>
@@ -36,11 +36,12 @@
     <SccProvider>
     </SccProvider>
     <OldToolsVersion>3.5</OldToolsVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <PublishUrl>publish\</PublishUrl>
+    <PublishUrl>http://localhost/Maticsoft.DAL/</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
@@ -49,7 +50,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
@@ -103,21 +103,10 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="COM.Excel, Version=1.1.1606.17082, Culture=neutral">
+    <Reference Include="MySql.Data, Version=5.1.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\COM.Excel.dll</HintPath>
-    </Reference>
-    <Reference Include="Excel, Version=1.5.0.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\Excel.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenSmtp, Version=1.11.0.34196, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\OpenSmtp.dll</HintPath>
-    </Reference>
-    <Reference Include="OWC10Chart, Version=1.0.2074.16784, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\OWC10Chart.dll</HintPath>
+      <HintPath>..\Lib\MySql.Data.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -129,59 +118,35 @@
     <Reference Include="System.Data">
       <Name>System.Data</Name>
     </Reference>
-    <Reference Include="System.Web">
-      <Name>System.Web</Name>
+    <Reference Include="System.Web.Services">
+      <Name>System.Web.Services</Name>
     </Reference>
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
+    <ProjectReference Include="..\Common\WEB.Common.csproj">
+      <Project>{E3D8759A-C5EB-402D-9F10-F5C6029A8D1A}</Project>
+      <Name>WEB.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DBUtility\WEB.DBUtility.csproj">
+      <Project>{0988C62E-247F-471F-A183-DB509C7A3839}</Project>
+      <Name>WEB.DBUtility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\WEB.Model.csproj">
+      <Name>WEB.Model</Name>
+      <Project>{53995DBB-9836-4647-AD22-865884FDEB9E}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseOp.cs" />
-    <Compile Include="FileMessage.cs" />
-    <Compile Include="FileOper.cs" />
-    <Compile Include="HttpProc.cs" />
-    <Compile Include="MailSender.cs" />
-    <Compile Include="PageBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Assistant.cs" />
-    <Compile Include="ConfigHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataCache.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataToExcel.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DEncrypt\DEncrypt.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DEncrypt\DESEncrypt.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DEncrypt\HashEncode.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DEncrypt\RSACryption.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="INIFile.cs" />
-    <Compile Include="MessageBox.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="PageValidate.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="RMB.cs" />
-    <Compile Include="StringPlus.cs" />
-    <Compile Include="TimeParser.cs" />
-    <Compile Include="Tool.cs" />
-    <Compile Include="UrlOper.cs" />
+    <Compile Include="SysManage.cs" />
+    <Compile Include="Yo_Jurisdiction.cs" />
+    <Compile Include="Yo_Organize.cs" />
+    <Compile Include="Yo_Role.cs" />
+    <Compile Include="Yo_User.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -189,15 +154,25 @@
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
+      <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

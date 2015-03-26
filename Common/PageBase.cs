@@ -8,10 +8,10 @@ using System.Web;
 /// </summary>
 public class BasePage : System.Web.UI.Page
 {
-	public BasePage()
-	{
-		//
-		//TODO: 在此处添加构造函数逻辑
-		//
-	}
+    public BasePage()
+    {
+        //
+        //TODO: 在此处添加构造函数逻辑
+        //
+    }
 }
