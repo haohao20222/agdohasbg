@@ -6,11 +6,11 @@ using Maticsoft.DBUtility;//Please add references
 namespace Maticsoft.DAL
 {
 	/// <summary>
-	/// 数据访问类:Yo_Organize
+	/// 数据访问类:Yo_Role
 	/// </summary>
-	public partial class Yo_Organize
+	public partial class Yo_RoleDAL
 	{
-		public Yo_Organize()
+		public Yo_RoleDAL()
 		{}
 		#region  BasicMethod
 
@@ -19,7 +19,7 @@ namespace Maticsoft.DAL
 		/// </summary>
 		public int GetMaxId()
 		{
-		return DbHelperSQL.GetMaxID("ID", "Yo_Organize"); 
+		return DbHelperSQL.GetMaxID("ID", "Yo_Role"); 
 		}
 
 		/// <summary>
@@ -28,7 +28,7 @@ namespace Maticsoft.DAL
 		public bool Exists(int ID)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select count(1) from Yo_Organize");
+			strSql.Append("select count(1) from Yo_Role");
 			strSql.Append(" where ID=@ID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@ID", SqlDbType.Int,4)
@@ -42,20 +42,20 @@ namespace Maticsoft.DAL
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public int Add(Maticsoft.Model.Yo_Organize model)
+		public int Add(Maticsoft.Model.Yo_Role model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("insert into Yo_Organize(");
-			strSql.Append("FatherOrganize,OrganizeName,Note)");
+			strSql.Append("insert into Yo_Role(");
+			strSql.Append("RoleName,JurisdictionIDList,Note)");
 			strSql.Append(" values (");
-			strSql.Append("@FatherOrganize,@OrganizeName,@Note)");
+			strSql.Append("@RoleName,@JurisdictionIDList,@Note)");
 			strSql.Append(";select @@IDENTITY");
 			SqlParameter[] parameters = {
-					new SqlParameter("@FatherOrganize", SqlDbType.Int,4),
-					new SqlParameter("@OrganizeName", SqlDbType.NVarChar,50),
+					new SqlParameter("@RoleName", SqlDbType.NVarChar,50),
+					new SqlParameter("@JurisdictionIDList", SqlDbType.NVarChar,50),
 					new SqlParameter("@Note", SqlDbType.NVarChar,250)};
-			parameters[0].Value = model.FatherOrganize;
-			parameters[1].Value = model.OrganizeName;
+			parameters[0].Value = model.RoleName;
+			parameters[1].Value = model.JurisdictionIDList;
 			parameters[2].Value = model.Note;
 
 			object obj = DbHelperSQL.GetSingle(strSql.ToString(),parameters);
@@ -71,21 +71,21 @@ namespace Maticsoft.DAL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(Maticsoft.Model.Yo_Organize model)
+		public bool Update(Maticsoft.Model.Yo_Role model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("update Yo_Organize set ");
-			strSql.Append("FatherOrganize=@FatherOrganize,");
-			strSql.Append("OrganizeName=@OrganizeName,");
+			strSql.Append("update Yo_Role set ");
+			strSql.Append("RoleName=@RoleName,");
+			strSql.Append("JurisdictionIDList=@JurisdictionIDList,");
 			strSql.Append("Note=@Note");
 			strSql.Append(" where ID=@ID");
 			SqlParameter[] parameters = {
-					new SqlParameter("@FatherOrganize", SqlDbType.Int,4),
-					new SqlParameter("@OrganizeName", SqlDbType.NVarChar,50),
+					new SqlParameter("@RoleName", SqlDbType.NVarChar,50),
+					new SqlParameter("@JurisdictionIDList", SqlDbType.NVarChar,50),
 					new SqlParameter("@Note", SqlDbType.NVarChar,250),
 					new SqlParameter("@ID", SqlDbType.Int,4)};
-			parameters[0].Value = model.FatherOrganize;
-			parameters[1].Value = model.OrganizeName;
+			parameters[0].Value = model.RoleName;
+			parameters[1].Value = model.JurisdictionIDList;
 			parameters[2].Value = model.Note;
 			parameters[3].Value = model.ID;
 
@@ -107,7 +107,7 @@ namespace Maticsoft.DAL
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("delete from Yo_Organize ");
+			strSql.Append("delete from Yo_Role ");
 			strSql.Append(" where ID=@ID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@ID", SqlDbType.Int,4)
@@ -130,7 +130,7 @@ namespace Maticsoft.DAL
 		public bool DeleteList(string IDlist )
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("delete from Yo_Organize ");
+			strSql.Append("delete from Yo_Role ");
 			strSql.Append(" where ID in ("+IDlist + ")  ");
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString());
 			if (rows > 0)
@@ -147,18 +147,18 @@ namespace Maticsoft.DAL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public Maticsoft.Model.Yo_Organize GetModel(int ID)
+		public Maticsoft.Model.Yo_Role GetModel(int ID)
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select  top 1 ID,FatherOrganize,OrganizeName,Note from Yo_Organize ");
+			strSql.Append("select  top 1 ID,RoleName,JurisdictionIDList,Note from Yo_Role ");
 			strSql.Append(" where ID=@ID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@ID", SqlDbType.Int,4)
 			};
 			parameters[0].Value = ID;
 
-			Maticsoft.Model.Yo_Organize model=new Maticsoft.Model.Yo_Organize();
+			Maticsoft.Model.Yo_Role model=new Maticsoft.Model.Yo_Role();
 			DataSet ds=DbHelperSQL.Query(strSql.ToString(),parameters);
 			if(ds.Tables[0].Rows.Count>0)
 			{
@@ -174,22 +174,22 @@ namespace Maticsoft.DAL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public Maticsoft.Model.Yo_Organize DataRowToModel(DataRow row)
+		public Maticsoft.Model.Yo_Role DataRowToModel(DataRow row)
 		{
-			Maticsoft.Model.Yo_Organize model=new Maticsoft.Model.Yo_Organize();
+			Maticsoft.Model.Yo_Role model=new Maticsoft.Model.Yo_Role();
 			if (row != null)
 			{
 				if(row["ID"]!=null && row["ID"].ToString()!="")
 				{
 					model.ID=int.Parse(row["ID"].ToString());
 				}
-				if(row["FatherOrganize"]!=null && row["FatherOrganize"].ToString()!="")
+				if(row["RoleName"]!=null)
 				{
-					model.FatherOrganize=int.Parse(row["FatherOrganize"].ToString());
+					model.RoleName=row["RoleName"].ToString();
 				}
-				if(row["OrganizeName"]!=null)
+				if(row["JurisdictionIDList"]!=null)
 				{
-					model.OrganizeName=row["OrganizeName"].ToString();
+					model.JurisdictionIDList=row["JurisdictionIDList"].ToString();
 				}
 				if(row["Note"]!=null)
 				{
@@ -205,8 +205,8 @@ namespace Maticsoft.DAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select ID,FatherOrganize,OrganizeName,Note ");
-			strSql.Append(" FROM Yo_Organize ");
+			strSql.Append("select ID,RoleName,JurisdictionIDList,Note ");
+			strSql.Append(" FROM Yo_Role ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -225,8 +225,8 @@ namespace Maticsoft.DAL
 			{
 				strSql.Append(" top "+Top.ToString());
 			}
-			strSql.Append(" ID,FatherOrganize,OrganizeName,Note ");
-			strSql.Append(" FROM Yo_Organize ");
+			strSql.Append(" ID,RoleName,JurisdictionIDList,Note ");
+			strSql.Append(" FROM Yo_Role ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -241,7 +241,7 @@ namespace Maticsoft.DAL
 		public int GetRecordCount(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select count(1) FROM Yo_Organize ");
+			strSql.Append("select count(1) FROM Yo_Role ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -272,7 +272,7 @@ namespace Maticsoft.DAL
 			{
 				strSql.Append("order by T.ID desc");
 			}
-			strSql.Append(")AS Row, T.*  from Yo_Organize T ");
+			strSql.Append(")AS Row, T.*  from Yo_Role T ");
 			if (!string.IsNullOrEmpty(strWhere.Trim()))
 			{
 				strSql.Append(" WHERE " + strWhere);
@@ -297,7 +297,7 @@ namespace Maticsoft.DAL
 					new SqlParameter("@OrderType", SqlDbType.Bit),
 					new SqlParameter("@strWhere", SqlDbType.VarChar,1000),
 					};
-			parameters[0].Value = "Yo_Organize";
+			parameters[0].Value = "Yo_Role";
 			parameters[1].Value = "ID";
 			parameters[2].Value = PageSize;
 			parameters[3].Value = PageIndex;

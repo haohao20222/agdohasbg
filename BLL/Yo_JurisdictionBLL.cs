@@ -6,19 +6,18 @@ using Maticsoft.Model;
 namespace Maticsoft.BLL
 {
 	/// <summary>
-	/// Yo_Organize
+	/// Yo_Jurisdiction
 	/// </summary>
-	public partial class Yo_Organize
+    public static partial class Yo_JurisdictionBLL
 	{
-		private readonly Maticsoft.DAL.Yo_Organize dal=new Maticsoft.DAL.Yo_Organize();
-		public Yo_Organize()
-		{}
+        private static readonly Maticsoft.DAL.Yo_JurisdictionDAL dal = new Maticsoft.DAL.Yo_JurisdictionDAL();
+
 		#region  BasicMethod
 
 		/// <summary>
 		/// 得到最大ID
 		/// </summary>
-		public int GetMaxId()
+		public static int GetMaxId()
 		{
 			return dal.GetMaxId();
 		}
@@ -26,7 +25,7 @@ namespace Maticsoft.BLL
 		/// <summary>
 		/// 是否存在该记录
 		/// </summary>
-		public bool Exists(int ID)
+        public static bool Exists(int ID)
 		{
 			return dal.Exists(ID);
 		}
@@ -34,7 +33,7 @@ namespace Maticsoft.BLL
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public int  Add(Maticsoft.Model.Yo_Organize model)
+        public static int Add(Maticsoft.Model.Yo_Jurisdiction model)
 		{
 			return dal.Add(model);
 		}
@@ -42,7 +41,7 @@ namespace Maticsoft.BLL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(Maticsoft.Model.Yo_Organize model)
+        public static bool Update(Maticsoft.Model.Yo_Jurisdiction model)
 		{
 			return dal.Update(model);
 		}
@@ -50,7 +49,7 @@ namespace Maticsoft.BLL
 		/// <summary>
 		/// 删除一条数据
 		/// </summary>
-		public bool Delete(int ID)
+        public static bool Delete(int ID)
 		{
 			
 			return dal.Delete(ID);
@@ -58,7 +57,7 @@ namespace Maticsoft.BLL
 		/// <summary>
 		/// 删除一条数据
 		/// </summary>
-		public bool DeleteList(string IDlist )
+        public static bool DeleteList(string IDlist)
 		{
 			return dal.DeleteList(IDlist );
 		}
@@ -66,7 +65,7 @@ namespace Maticsoft.BLL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public Maticsoft.Model.Yo_Organize GetModel(int ID)
+        public static Maticsoft.Model.Yo_Jurisdiction GetModel(int ID)
 		{
 			
 			return dal.GetModel(ID);
@@ -75,10 +74,10 @@ namespace Maticsoft.BLL
 		/// <summary>
 		/// 得到一个对象实体，从缓存中
 		/// </summary>
-		public Maticsoft.Model.Yo_Organize GetModelByCache(int ID)
+        public static Maticsoft.Model.Yo_Jurisdiction GetModelByCache(int ID)
 		{
 			
-			string CacheKey = "Yo_OrganizeModel-" + ID;
+			string CacheKey = "Yo_JurisdictionModel-" + ID;
 			object objModel = Maticsoft.Common.DataCache.GetCache(CacheKey);
 			if (objModel == null)
 			{
@@ -93,27 +92,27 @@ namespace Maticsoft.BLL
 				}
 				catch{}
 			}
-			return (Maticsoft.Model.Yo_Organize)objModel;
+			return (Maticsoft.Model.Yo_Jurisdiction)objModel;
 		}
 
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public DataSet GetList(string strWhere)
+        public static DataSet GetList(string strWhere)
 		{
 			return dal.GetList(strWhere);
 		}
 		/// <summary>
 		/// 获得前几行数据
 		/// </summary>
-		public DataSet GetList(int Top,string strWhere,string filedOrder)
+        public static DataSet GetList(int Top, string strWhere, string filedOrder)
 		{
 			return dal.GetList(Top,strWhere,filedOrder);
 		}
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<Maticsoft.Model.Yo_Organize> GetModelList(string strWhere)
+        public static List<Maticsoft.Model.Yo_Jurisdiction> GetModelList(string strWhere)
 		{
 			DataSet ds = dal.GetList(strWhere);
 			return DataTableToList(ds.Tables[0]);
@@ -121,13 +120,13 @@ namespace Maticsoft.BLL
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<Maticsoft.Model.Yo_Organize> DataTableToList(DataTable dt)
+        public static List<Maticsoft.Model.Yo_Jurisdiction> DataTableToList(DataTable dt)
 		{
-			List<Maticsoft.Model.Yo_Organize> modelList = new List<Maticsoft.Model.Yo_Organize>();
+			List<Maticsoft.Model.Yo_Jurisdiction> modelList = new List<Maticsoft.Model.Yo_Jurisdiction>();
 			int rowsCount = dt.Rows.Count;
 			if (rowsCount > 0)
 			{
-				Maticsoft.Model.Yo_Organize model;
+				Maticsoft.Model.Yo_Jurisdiction model;
 				for (int n = 0; n < rowsCount; n++)
 				{
 					model = dal.DataRowToModel(dt.Rows[n]);
@@ -143,7 +142,7 @@ namespace Maticsoft.BLL
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public DataSet GetAllList()
+        public static DataSet GetAllList()
 		{
 			return GetList("");
 		}
@@ -151,14 +150,14 @@ namespace Maticsoft.BLL
 		/// <summary>
 		/// 分页获取数据列表
 		/// </summary>
-		public int GetRecordCount(string strWhere)
+        public static int GetRecordCount(string strWhere)
 		{
 			return dal.GetRecordCount(strWhere);
 		}
 		/// <summary>
 		/// 分页获取数据列表
 		/// </summary>
-		public DataSet GetListByPage(string strWhere, string orderby, int startIndex, int endIndex)
+        public static DataSet GetListByPage(string strWhere, string orderby, int startIndex, int endIndex)
 		{
 			return dal.GetListByPage( strWhere,  orderby,  startIndex,  endIndex);
 		}

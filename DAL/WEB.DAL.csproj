@@ -143,10 +143,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SysManage.cs" />
-    <Compile Include="Yo_Jurisdiction.cs" />
-    <Compile Include="Yo_Organize.cs" />
-    <Compile Include="Yo_Role.cs" />
-    <Compile Include="Yo_User.cs" />
+    <Compile Include="Yo_JurisdictionDAL.cs" />
+    <Compile Include="Yo_OrganizeDAL.cs" />
+    <Compile Include="Yo_RoleDAL.cs" />
+    <Compile Include="Yo_UserDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

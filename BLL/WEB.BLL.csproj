@@ -121,23 +121,23 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SysManage.cs" />
-    <Compile Include="Yo_Jurisdiction.cs" />
-    <Compile Include="Yo_Organize.cs" />
-    <Compile Include="Yo_Role.cs" />
-    <Compile Include="Yo_User.cs" />
+    <Compile Include="Yo_JurisdictionBLL.cs" />
+    <Compile Include="Yo_OrganizeBLL.cs" />
+    <Compile Include="Yo_RoleBLL.cs" />
+    <Compile Include="Yo_UserBLL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\WEB.Common.csproj">
       <Project>{E3D8759A-C5EB-402D-9F10-F5C6029A8D1A}</Project>
-      <Name>Common</Name>
+      <Name>WEB.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DAL\DAL.csproj">
+    <ProjectReference Include="..\DAL\WEB.DAL.csproj">
       <Project>{9FE00521-3A8B-42B1-814E-585E99407B2E}</Project>
-      <Name>DAL</Name>
+      <Name>WEB.DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Model\Model.csproj">
+    <ProjectReference Include="..\Model\WEB.Model.csproj">
       <Project>{53995DBB-9836-4647-AD22-865884FDEB9E}</Project>
-      <Name>Model</Name>
+      <Name>WEB.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
