@@ -7,7 +7,7 @@ using System.Text;
 /// <summary>
 ///YoHandler 的摘要说明
 /// </summary>
-public class YoHandler:IHttpHandler
+public class YoHandler : IHttpHandler, System.Web.SessionState.IRequiresSessionState
 {
 
     public bool IsReusable { get { return false; } }

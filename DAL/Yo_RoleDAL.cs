@@ -52,7 +52,7 @@ namespace Maticsoft.DAL
 			strSql.Append(";select @@IDENTITY");
 			SqlParameter[] parameters = {
 					new SqlParameter("@RoleName", SqlDbType.NVarChar,50),
-					new SqlParameter("@JurisdictionIDList", SqlDbType.NVarChar,50),
+					new SqlParameter("@JurisdictionIDList", SqlDbType.NVarChar,1000),
 					new SqlParameter("@Note", SqlDbType.NVarChar,250)};
 			parameters[0].Value = model.RoleName;
 			parameters[1].Value = model.JurisdictionIDList;
@@ -81,7 +81,7 @@ namespace Maticsoft.DAL
 			strSql.Append(" where ID=@ID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@RoleName", SqlDbType.NVarChar,50),
-					new SqlParameter("@JurisdictionIDList", SqlDbType.NVarChar,50),
+					new SqlParameter("@JurisdictionIDList", SqlDbType.NVarChar,1000),
 					new SqlParameter("@Note", SqlDbType.NVarChar,250),
 					new SqlParameter("@ID", SqlDbType.Int,4)};
 			parameters[0].Value = model.RoleName;

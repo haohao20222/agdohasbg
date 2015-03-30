@@ -42,11 +42,12 @@
         }
         function login() {
             yocom.ajax({
+                waitMsg: "Logging...",
                 url: "Action/Handler.ashx?cmd=LoginUser",
-                data: $("form1").serialize(),
+                data: $("#form1").serializeArray(),
                 success: function (data) {
                     if (data.flag == "true") {
-                        $.messager.alert('成功', data.msg);
+                        window.location = "Default.aspx";
                     } else {
                         $.messager.alert('失败', data.msg);
                     }
@@ -67,8 +68,8 @@
         <div class="login-form">
             <p class="login-title">广州市增城冠达五金厂订单业务系统</p>
             <ul>
-                <li><span class="login-lable">用户名：</span><input id="UserNameTxt" class="login-txt" type="text" /></li>
-                <li><span class="login-lable">密  码：</span><input id="PasswordTxt" class="login-txt" type="password" /></li>
+                <li><span class="login-lable">用户名：</span><input id="UserNameTxt" class="login-txt" name="UserNameTxt" type="text" /></li>
+                <li><span class="login-lable">密  码：</span><input id="PasswordTxt" class="login-txt" name="PasswordTxt" type="password" /></li>
                 <li><span class="login-lable">验证码：</span>
                     <input class="reg" maxlength="5" size="5" style="width: 60px; height: 25px; margin-top:10px;font-size: 16px;
                                         line-height: 22px; font-weight: bold; float:left;border:1px solid #CCC" name="CCode" id="CCode" />

@@ -62,7 +62,7 @@ namespace Maticsoft.DAL
 					new SqlParameter("@LastLoginTime", SqlDbType.DateTime),
 					new SqlParameter("@OrganizeID", SqlDbType.Int,4),
 					new SqlParameter("@OrganizeName", SqlDbType.NVarChar,50),
-					new SqlParameter("@RoleIDList", SqlDbType.NVarChar,100)};
+					new SqlParameter("@RoleIDList", SqlDbType.NVarChar,500)};
 			parameters[0].Value = model.UserName;
 			parameters[1].Value = model.UserPassword;
 			parameters[2].Value = model.IsLock;
@@ -118,7 +118,7 @@ namespace Maticsoft.DAL
 					new SqlParameter("@LastLoginTime", SqlDbType.DateTime),
 					new SqlParameter("@OrganizeID", SqlDbType.Int,4),
 					new SqlParameter("@OrganizeName", SqlDbType.NVarChar,50),
-					new SqlParameter("@RoleIDList", SqlDbType.NVarChar,100),
+					new SqlParameter("@RoleIDList", SqlDbType.NVarChar,500),
 					new SqlParameter("@ID", SqlDbType.Int,4)};
 			parameters[0].Value = model.UserName;
 			parameters[1].Value = model.UserPassword;
@@ -214,6 +214,31 @@ namespace Maticsoft.DAL
 				return null;
 			}
 		}
+        /// <summary>
+        /// 得到一个对象实体
+        /// </summary>
+        public Maticsoft.Model.Yo_User GetModel(string UserName)
+        {
+
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select  top 1 ID,UserName,UserPassword,IsLock,ReadName,Phone,CreatTime,Creator,CreatorID,LastLoginTime,OrganizeID,OrganizeName,RoleIDList from Yo_User ");
+            strSql.Append(" where UserName=@UserName");
+            SqlParameter[] parameters = {
+					new SqlParameter("@UserName", SqlDbType.NVarChar,50)
+			};
+            parameters[0].Value = UserName;
+
+            Maticsoft.Model.Yo_User model = new Maticsoft.Model.Yo_User();
+            DataSet ds = DbHelperSQL.Query(strSql.ToString(), parameters);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                return DataRowToModel(ds.Tables[0].Rows[0]);
+            }
+            else
+            {
+                return null;
+            }
+        }
 
 
 		/// <summary>

@@ -53,39 +53,39 @@
     <div data-options="region:'west',split:true,title:'功能导航'" style="width: 250px;">
         <div class="easyui-accordion" style="width: 100%; height: 100%;">
 
-            <div title="客户信息" data-options="iconCls:'icon-ok'" id="Div1" runat="server">
+            <div title="客户信息" data-options="iconCls:'icon-ok'" id="Div1" visible="false" runat="server">
                 <ul class="easyui-tree">
-                    <li id="Div1_li1" runat="server"><a href="javascript:;" onclick="addPagePanel('客户列表','information/InformationManager.aspx?itype=36')">
+                    <li id="Div1_li1" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('客户列表','information/InformationManager.aspx?itype=36')">
                         客户列表</a></li>
-                    <li id="Div1_li2" runat="server"><a href="javascript:;" onclick="addPagePanel('新增客户','information/InformationManager.aspx?itype=28')">
+                    <li id="Div1_li2" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('新增客户','information/InformationManager.aspx?itype=28')">
                         新增客户</a></li>
                 </ul>
             </div>
 
-            <div title="订单信息" data-options="iconCls:'icon-ok',selected:true" style="overflow: auto;" id="Div2" runat="server">
+            <div title="订单信息" data-options="iconCls:'icon-ok',selected:true" style="overflow: auto;" id="Div2" visible="false" runat="server">
                 <ul class="easyui-tree">
-                    <li id="Div2_li1" runat="server"><a href="javascript:;" onclick="addPagePanel('客户订单','shop/ProductManager.aspx')">
+                    <li id="Div2_li1" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('客户订单','shop/ProductManager.aspx')">
                         客户订单</a></li>
-                    <li id="Div2_li2" runat="server"><a href="javascript:;" onclick="addPagePanel('订单列表','shop/AddProduct.aspx')">
+                    <li id="Div2_li2" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('订单列表','shop/AddProduct.aspx')">
                         订单列表</a></li>
-                    <li id="Div2_li3" runat="server"><a href="javascript:;" onclick="addPagePanel('新增订单','shop/AddProduct.aspx')">
+                    <li id="Div2_li3" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('新增订单','shop/AddProduct.aspx')">
                         新增订单</a></li>
                 </ul>
             </div>
 
-            <div title="综合信息" data-options="iconCls:'icon-ok'" style="overflow: auto;" id="Div3" runat="server">
+            <div title="综合信息" data-options="iconCls:'icon-ok'" style="overflow: auto;" id="Div3" visible="false" runat="server">
                 <ul class="easyui-tree">
-                    <li id="Div3_li1" runat="server"><span>统计信息</span>
+                    <li id="Div3_li1" visible="false" runat="server"><span>统计信息</span>
                         <ul>
-                            <li id="Div3_li1_1" runat="server"><a href="javascript:;" onclick="addPagePanel('订单统计','shop/ProductManager.aspx')">
+                            <li id="Div3_li1_1" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('订单统计','shop/ProductManager.aspx')">
                                 订单统计</a></li>
                         </ul>
                     </li>
-                    <li id="Div3_li2" runat="server"><span>历史信息</span>
+                    <li id="Div3_li2" visible="false" runat="server"><span>历史信息</span>
                         <ul>
-                            <li id="Div3_li2_1" runat="server"><a href="javascript:;" onclick="addPagePanel('历史客户','shop/ProductManager.aspx')">
+                            <li id="Div3_li2_1" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('历史客户','shop/ProductManager.aspx')">
                                 历史客户</a></li>
-                            <li id="Div3_li2_2" runat="server"><a href="javascript:;" onclick="addPagePanel('历史订单','shop/ProductManager.aspx')">
+                            <li id="Div3_li2_2" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('历史订单','shop/ProductManager.aspx')">
                                 历史订单</a></li>
                         </ul>
                     </li>
@@ -93,25 +93,25 @@
             </div>
             
             
-            <div title="系统管理" data-options="iconCls:'icon-ok'" id="Div4" runat="server">
+            <div title="系统管理" data-options="iconCls:'icon-ok'" id="Div4" visible="false" runat="server">
                 <ul class="easyui-tree">
                     <li id="Div4_li1" runat="server"><span>组织结构</span>
                         <ul>
-                            <li id="Div4_li1_1" runat="server"><a href="javascript:;" onclick="addPagePanel('部门设置','shop/ProductManager.aspx')">
+                            <li id="Div4_li1_1" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('部门设置','shop/ProductManager.aspx')">
                                 部门设置</a></li>
-                            <li id="Div4_li1_2" runat="server"><a href="javascript:;" onclick="addPagePanel('员工账号','shop/ProductManager.aspx')">
+                            <li id="Div4_li1_2" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('员工账号','shop/ProductManager.aspx')">
                                 员工账号</a></li>
-                            <li id="Div4_li1_3" runat="server"><a href="javascript:;" onclick="addPagePanel('添加账号','shop/AddProduct.aspx')">
+                            <li id="Div4_li1_3" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('添加账号','shop/AddProduct.aspx')">
                                 添加账号</a></li>
                         </ul>
                     </li>
-                    <li id="Div4_li2" runat="server"><span>权限设置</span>
+                    <li id="Div4_li2" visible="false" runat="server"><span>权限设置</span>
                         <ul>
-                            <li id="Div4_li2_1" runat="server"><a href="javascript:;" onclick="addPagePanel('角色','Notice/NoticeManager.aspx')">
+                            <li id="Div4_li2_1" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('角色','Notice/NoticeManager.aspx')">
                                 角色权限</a></li>
                         </ul>
                      </li>
-                     <li id="Div4_li3" runat="server"><a href="javascript:;" onclick="addPagePanel('公告信息','Notice/NoticeManager.aspx')">
+                     <li id="Div4_li3" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('公告信息','Notice/NoticeManager.aspx')">
                                 公告信息</a>
                      </li>
                 </ul>
@@ -125,7 +125,7 @@
         <div id="tt" class="easyui-tabs" data-options="tools:'#tab-tools'" style="width: 100%;
             height: 100%">
             <div title="主页" style="padding:10px;">
-			    index
+			    <iframe scrolling="yes" frameborder="0"  src="Index.aspx" style="width:100%;height:100%;"></iframe>
 		    </div>
         </div>
     </div>

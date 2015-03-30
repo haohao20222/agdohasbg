@@ -5,6 +5,7 @@ using System.Web;
 using Maticsoft.Model;
 using System.Text;
 using Maticsoft.Common;
+using Maticsoft.BLL;
 
 /// <summary>
 ///BasePage 的摘要说明
@@ -12,10 +13,8 @@ using Maticsoft.Common;
 public class BasePage : System.Web.UI.Page
 {
     /// <summary>
-    /// 管理员用户ID
+    /// 登陆用户
     /// </summary>
-    public int WorkerID { get; set; }
-
     public Yo_User MyUser;
 
     protected override void OnInit(EventArgs e)
@@ -23,8 +22,11 @@ public class BasePage : System.Web.UI.Page
         base.OnInit(e);
         if (!string.IsNullOrEmpty(Tool.CookieGet("YoUserID")))
         {
-            Response.Write(Tool.CookieGet("YoUserID"));
-            //Response.Redirect("~/Login.aspx");
+            MyUser = Yo_UserBLL.GetModel( Convert.ToInt32(Tool.CookieGet("YoUserID")));
+            if (MyUser.IsLock)
+            {
+                Response.Redirect("~/LogOut.aspx");
+            }
         }
         else
         {

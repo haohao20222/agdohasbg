@@ -1,7 +1,10 @@
 ﻿var yocom = {
     ajax: function (jsonData) {
-        if (jsonData.dataType == undefined || jsonData.dataType == '') {
+        if (jsonData.dataType == undefined || jsonData.dataType == "") {
             jsonData.dataType = "json";
+        }
+        if (jsonData.waitMsg == undefined || jsonData.waitMsg == "") {
+            jsonData.waitMsg = "Processing, please wait ...";
         }
         $.ajax({
             type: "POST",
@@ -12,7 +15,7 @@
                 $("<div class=\"datagrid-mask\" id=\"n-datagrid-mask\"></div>").css({
                     display: "block", width: "100%", height: $(window).height(), zIndex: 99998
                 }).appendTo("body");
-                $("<div class=\"datagrid-mask-msg\" id=\"n-datagrid-mask-msg\"></div>").html("Processing, please wait ...").appendTo("body").css({
+                $("<div class=\"datagrid-mask-msg\" id=\"n-datagrid-mask-msg\"></div>").html(jsonData.waitMsg).appendTo("body").css({
                     display: "block", left: ($(document.body).outerWidth(true) - 190) / 2, top: ($(window).height() - 45) / 2, zIndex: 99999
                 });
             },
@@ -63,7 +66,7 @@
         });
     },
     alert: function (title, msg) {
-        if (arguments.length>=2)
+        if (arguments.length >= 2)
             $.messager.alert(title, msg);
         else
             $.messager.alert("提示", title);

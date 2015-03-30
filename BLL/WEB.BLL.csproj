@@ -121,6 +121,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SysManage.cs" />
+    <Compile Include="UserManager.cs" />
     <Compile Include="Yo_JurisdictionBLL.cs" />
     <Compile Include="Yo_OrganizeBLL.cs" />
     <Compile Include="Yo_RoleBLL.cs" />

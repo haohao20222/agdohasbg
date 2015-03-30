@@ -70,7 +70,11 @@ namespace Maticsoft.BLL
 			
 			return dal.GetModel(ID);
 		}
+        public static Maticsoft.Model.Yo_User GetModel(string userName)
+        {
 
+            return dal.GetModel(userName);
+        }
 		/// <summary>
 		/// 得到一个对象实体，从缓存中
 		/// </summary>
