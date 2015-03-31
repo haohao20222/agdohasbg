@@ -22,7 +22,7 @@ public class BasePage : System.Web.UI.Page
         base.OnInit(e);
         if (!string.IsNullOrEmpty(Tool.CookieGet("YoUserID")))
         {
-            MyUser = Yo_UserBLL.GetModel( Convert.ToInt32(Tool.CookieGet("YoUserID")));
+            MyUser = Yo_UserBLL.GetModel(Convert.ToInt32(Tool.CookieGet("YoUserID")));
             if (MyUser.IsLock)
             {
                 Response.Redirect("~/LogOut.aspx");
@@ -30,14 +30,9 @@ public class BasePage : System.Web.UI.Page
         }
         else
         {
-            if (Request.Url.ToString().ToLower().Contains("logout.aspx"))
-            {
-                Response.Redirect("~/Login.aspx");
-            }
-            else
-            {
-                Response.Redirect("/Login.aspx?url=" + Request.Url.ToString());
-            }
+
+            Response.Redirect("~/Login.aspx");
+
         }
     }
 
