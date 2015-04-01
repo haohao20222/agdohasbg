@@ -17,111 +17,169 @@
     .ui-page{position:absolute!important;left:5px!important;width:auto!important; position:relative; left:0px; width:100%;right:5px;height:100%;overflow: auto;}
     </style>
 </head>
-<body style="position:relative;">
+<body style="position:relative;" onclick ="clickBlank()">
 
     <div class="ui-page">
 	<table id="tg" class="easyui-treegrid" title="部门管理" style="width:100%;height:100%"
 			data-options="
+                iconCls: 'icon-edit',
+				singleSelect: true,
 				rownumbers: true,
+
 				animate: true,
-				fitColumns: true,
-				url: 'Action/Handler.ashx?cmd=GetBMDataList',
+				
+				url:'Action/Handler.ashx?cmd=GetBMDataList',
 				method: 'get',
+
 				idField: 'id',
 				treeField: 'name',
-				showFooter: true,
 
-                pagination:true,
-                pageSize:20,
-                toolbar:'#tb'
+                toolbar:'#tb',
+                onDblClickRow: onDblClickRow
+               
 			">
 		<thead>
 			<tr>
 				<th data-options="field:'id',width:80,hidden:'true'">ID</th>
-				<th data-options="field:'name',width:200,align:'right',editor:'text'">部门名称</th>
-				<th data-options="field:'note',width:300,editor:'text'">说明</th>
+				<th data-options="field:'name',width:200,editor:'textbox',halign:'center',styler: function(value,row,index){if(value=='新建部门') return 'color:red';}">部门名称</th>
+				<th data-options="field:'note',width:500,align:'left',editor:'textbox',halign:'center'" >说明</th>
 			</tr>
 		</thead>
 	</table>
-    <div id="tb" style="padding:2px 5px;">
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="edit()">修改</a>
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="save()">保存</a>
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="cancel()">取消</a>
+    <div id="tb" style="padding:2px 5px;height:auto">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">增加</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">移除</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">保存</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">撤销</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">查看修改</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="thisReload()">刷新</a>
 	    </div>
 	<script type="text/javascript">
+
 	    $(function () {
-	        var pager = $('#tg').datagrid().datagrid('getPager'); // get the pager of datagrid
-	        pager.pagination({
-	            onBeforeRefresh: function () { $('#tg').datagrid('reload'); }, //刷新
-	            onSelectPage: function () {
-	                $(this).pagination('loading');
-	                $('#tg').datagrid('reload');
-	                $(this).pagination('loaded');
+	        $('#tg').treegrid({
+
+	            onBeforeEdit: function () {
+	                
 	            },
-	            buttons: [
-                    {
-                        iconCls: 'icon-add',
-                        handler: function () {
-                            edit();
-                        }
-                    }, {
-                        iconCls: 'icon-edit',
-                        handler: function () {
-                            editNotice();
-                        }
-                    }, {
-                        iconCls: 'icon-cancel',
-                        handler: function () {
-                            deleteNotice();
-                        }
-                    }]
+	            onAfterEdit: function () {
+	                
+	            },
+	            onLoadError: function (arguments) {
+	                $.messager.alert("错误", "数据加载失败！");
+                }
 	        });
 	    })
 
-	    function formatProgress(value) {
-	        if (value) {
-	            var s = '<div style="width:100%;border:1px solid #ccc">' +
-		    			'<div style="width:' + value + '%;background:#cc0000;color:#fff">' + value + '%' + '</div>'
-	            '</div>';
-	            return s;
+	    //刷新
+	    function thisReload() {
+	        yocom.confirm({
+	            msg: "刷新此页面，如果你的操作尚未保存将会丢失？",
+	            success: function () {
+	                window.location = "BM_Manager.aspx";
+	                //$('#tg').treegrid('reload');
+	            }
+	        });
+	    }
+
+	    var editIndex = undefined;
+	    function endEditing() {
+	        if (editIndex == undefined) { return true }
+	        if ($('#tg').treegrid('validateRow', editIndex.id)) {
+	            var ed = $('#tg').treegrid('getEditor', { index: editIndex.id });
+	            $('#tg').treegrid('endEdit', editIndex.id);
+	            editIndex = undefined;
+	            return true;
 	        } else {
-	            return '';
+	            return false;
 	        }
 	    }
-	    var editingId;
-	    function edit() {
-	        if (editingId != undefined) {
-	            $('#tg').treegrid('select', editingId);
-	            return;
-	        }
-	        var row = $('#tg').treegrid('getSelected');
-	        if (row) {
-	            editingId = row.id
-	            $('#tg').treegrid('beginEdit', editingId);
+        //单击修改
+	    function onDblClickRow(index) {
+	        if (editIndex != index) {
+	            if (endEditing()) {
+	                $('#tg').treegrid('selectRow', index.id).treegrid('beginEdit', index.id);
+	                editIndex = index;
+	            } else {
+	                $('#tg').treegrid('selectRow', editIndex.id); 
+	            }
 	        }
 	    }
-	    function save() {
-	        if (editingId != undefined) {
-	            var t = $('#tg');
-	            t.treegrid('endEdit', editingId);
-	            editingId = undefined;
-	            var persons = 0;
-	            var rows = t.treegrid('getChildren');
-	            for (var i = 0; i < rows.length; i++) {
-	                var p = parseInt(rows[i].persons);
-	                if (!isNaN(p)) {
-	                    persons += p;
+	    //增加
+	    function append() {
+	        if (endEditing()) {
+	            var node = $('#tg').treegrid('getSelected');
+	            yocom.ajax({
+	                url: "Action/Handler.ashx?cmd=AppendBM",
+	                data: { "fid": node.id },
+	                success: function (data) {
+	                    if (data.flag == "true") {
+	                        $('#tg').treegrid('append', {
+	                            parent: data.item.FatherOrganize,
+	                            data: [{
+	                                id: data.item.id,
+	                                name: data.item.name,
+	                                note: data.item.note,
+	                                _parentId: data.item.fid
+	                            }]
+	                        });
+	                        $('#tg').treegrid('reload').ajaxSuccess(function () {
+	                            $('#tg').treegrid('selectRow', data.item.id).treegrid('beginEdit', data.item.id);
+	                            editIndex = $('#tg').treegrid('getSelected');
+                            });
+	                    } else {
+	                        $.messager.alert('失败', data.msg);
+	                    }
+	                }
+	            });
+	        }
+	    }
+        //移除删除
+	    function removeit() {
+	        if (editIndex == undefined) { return }
+	        yocom.ajax({
+	            url: "Action/Handler.ashx?cmd=RemoveBM",
+	            data: { "fid": node.id },
+	            success: function (data) {
+	                if (data.flag == "true") {
+	                    $('#tg').treegrid('append', {
+	                        parent: data.item.FatherOrganize,
+	                        data: [{
+	                            id: data.item.id,
+	                            name: data.item.name,
+	                            note: data.item.note,
+	                            _parentId: data.item.fid
+	                        }]
+	                    });
+	                    $('#tg').treegrid('reload').ajaxSuccess(function () {
+	                        $('#tg').treegrid('selectRow', data.item.id).treegrid('beginEdit', data.item.id);
+	                        editIndex = $('#tg').treegrid('getSelected');
+	                    });
+	                } else {
+	                    $.messager.alert('失败', data.msg);
 	                }
 	            }
-	            var frow = t.treegrid('getFooterRows')[0];
-	            frow.persons = persons;
-	            t.treegrid('reloadFooter');
-	        }
+	        });
 	    }
-	    function cancel() {
-	        if (editingId != undefined) {
-	            $('#tg').treegrid('cancelEdit', editingId);
-	            editingId = undefined;
+        //保存
+	    function accept() {
+	        $('#tg').treegrid('acceptChanges');
+	    }
+	    //撤销
+	    function reject() {
+	        $('#tg').treegrid('rejectChanges');
+	        editIndex = undefined;
+	    }
+        //获取改变内容
+	    function getChanges() {
+	        var rows = $('#tg').treegrid('getChanges');
+	        $.messager.alert("提示", rows.length + ' 行被修改!');
+	    }
+
+	    function clickBlank() {
+	        if (editIndex != undefined) {
+	            $('#tg').treegrid('endEdit', editIndex.id);
+	            editIndex = undefined;
 	        }
 	    }
 	</script>
