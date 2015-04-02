@@ -39,8 +39,8 @@
         function showMsg() {
             $.messager.show({
                 title: 'My Title',
-                msg: 'Message will be closed after 5 seconds.',
-                timeout: 0,
+                msg: 'Message will be closed after 60 seconds.',
+                timeout: 60000,
                 showType: 'slide'
             });
         }
@@ -107,7 +107,7 @@
                     </li>
                     <li id="Div4_li2" visible="false" runat="server"><span>权限设置</span>
                         <ul>
-                            <li id="Div4_li2_1" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('角色','Notice/NoticeManager.aspx')">
+                            <li id="Div4_li2_1" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('角色','SystemSet/JS_Manager.aspx')">
                                 角色权限</a></li>
                         </ul>
                      </li>

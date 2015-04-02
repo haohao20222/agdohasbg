@@ -65,6 +65,29 @@
             }]
         });
     },
+    messager:function(jsonData) {
+        var s = document.getElementById("confirmdlg");
+        var ss = $("#confirmdlg");
+        if (ss.length < 1 || s == null) {
+            $("<div id=\"confirmdlg\" style='padding:10px;min-width:240px;max-width:900px;'></div>").appendTo("body");
+        }
+        $('#confirmdlg').html(jsonData.msg);
+        $('#confirmdlg').dialog({
+            title: '确认',
+            closed: false,
+            cache: false,
+            modal: true,
+            iconCls: 'icon-help',
+            buttons: [{
+                text: '确定',
+                iconCls: 'icon-ok',
+                handler: function () {
+                    jsonData.success();
+                    $('#confirmdlg').dialog('close');
+                }
+            }]
+        });
+    },
     alert: function (title, msg) {
         if (arguments.length >= 2)
             $.messager.alert(title, msg);
