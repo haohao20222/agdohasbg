@@ -99,9 +99,9 @@
                         <ul>
                             <li id="Div4_li1_1" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('部门设置','SystemSet/BM_Manager.aspx')">
                                 部门设置</a></li>
-                            <li id="Div4_li1_2" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('员工账号','shop/ProductManager.aspx')">
+                            <li id="Div4_li1_2" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('员工账号','SystemSet/YG_Manager.aspx')">
                                 员工账号</a></li>
-                            <li id="Div4_li1_3" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('添加账号','shop/AddProduct.aspx')">
+                            <li id="Div4_li1_3" visible="false" runat="server"><a href="javascript:;" onclick="addPagePanel('添加账号','SystemSet/YG_Manager.aspx')">
                                 添加账号</a></li>
                         </ul>
                     </li>

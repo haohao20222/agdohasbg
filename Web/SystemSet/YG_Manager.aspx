@@ -1,9 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="JS_Manager.aspx.cs" Inherits="SystemSet_JS_Manager" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="YG_Manager.aspx.cs" Inherits="SystemSet_YG_Manager" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<head id="Head1" runat="server">
     <meta charset="UTF-8">
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.1/themes/default/easyui.css" />
@@ -16,11 +16,17 @@
      html,body{ height:100%; width:100%; margin:0px; padding:0px;}
     .ui-page{position:absolute!important;top:5px!important;height:auto!important; position:relative; top:0px; height:100%;bottom:5px;width:100%;overflow: auto;}
     .ui-page{position:absolute!important;left:5px!important;width:auto!important; position:relative; left:0px; width:100%;right:5px;height:100%;overflow: auto;}
+    
+    .edituser{}
+    .edituser ul{}
+    .edituser ul li{ list-style:none; height:25px;}
+    .edituser ul li span{ display:block ; float:left; width:65px;height:20px; line-height:20px; font:12px; text-align:right;}
+    .edituser ul li .textbox{ float:left; width:200px;height:20px; line-height:20px; font:12px;}
     </style>
 </head>
 <body>
 <div class="ui-page">
-	<table id="dg" class="easyui-datagrid" title="角色管理" style="width:100%;height:100%"
+	<table id="dg" class="easyui-datagrid" title="员工账号" style="width:100%;height:100%"
 			data-options="
 				iconCls: 'icon-edit',
 				singleSelect: true,
@@ -32,21 +38,14 @@
 		<thead>
 			<tr>
 				<th data-options="field:'id',width:80,hidden:'ture'">ID</th>
-				<th data-options="field:'name',width:100,align:'center',styler: function(value,row,index){if(value=='新角色') return 'color:red';}">角色名称</th>
-				<th data-options="field:'khself',width:100,align:'center',styler: function(value,row,index){if(value=='√') return 'color:red; background-color:Yellow';}">客户信息（个人）</th>
-				<th data-options="field:'khall',width:100,align:'center',styler: function(value,row,index){if(value=='√') return 'color:red; background-color:Yellow';}">客户信息（所有）</th>
-				<th data-options="field:'orderself',width:100,align:'center',styler: function(value,row,index){if(value=='√') return 'color:red; background-color:Yellow';}">订单信息（个人）</th>
-				<th data-options="field:'orderall',width:100,align:'center',styler: function(value,row,index){if(value=='√') return 'color:red; background-color:Yellow';}">订单信息（所有）</th>
-                <th data-options="field:'tallyself',width:100,align:'center',styler: function(value,row,index){if(value=='√') return 'color:red; background-color:Yellow';}">订单统计（个人）</th>
-                <th data-options="field:'tallyall',width:100,align:'center',styler: function(value,row,index){if(value=='√') return 'color:red; background-color:Yellow';}">订单统计（所有）</th>
-                <th data-options="field:'hiskhself',width:100,align:'center',styler: function(value,row,index){if(value=='√') return 'color:red; background-color:Yellow';}">历史客户（个人）</th>
-                <th data-options="field:'hiskhall',width:100,align:'center',styler: function(value,row,index){if(value=='√') return 'color:red; background-color:Yellow';}">历史客户（所有）</th>
-                <th data-options="field:'hisorderself',width:100,align:'center',styler: function(value,row,index){if(value=='√') return 'color:red; background-color:Yellow';}">历史订单（个人）</th>
-                <th data-options="field:'hisorderall',width:100,align:'center',styler: function(value,row,index){if(value=='√') return 'color:red; background-color:Yellow';}">历史订单（所有）</th>
-                <th data-options="field:'bmset',width:100,align:'center',styler: function(value,row,index){if(value=='√') return 'color:red; background-color:Yellow';}">部门设置</th>
-                <th data-options="field:'employee',width:100,align:'center',styler: function(value,row,index){if(value=='√') return 'color:red; background-color:Yellow';}">员工账号</th>
-                <th data-options="field:'role',width:100,align:'center',styler: function(value,row,index){if(value=='√') return 'color:red; background-color:Yellow';}">角色权限</th>
-                <th data-options="field:'notice',width:100,align:'center',styler: function(value,row,index){if(value=='√') return 'color:red; background-color:Yellow';}">公告信息</th>
+				<th data-options="field:'username',width:100,halign:'center'">用户名</th>
+				<th data-options="field:'readname',width:100,halign:'center'">真实姓名</th>
+                <th data-options="field:'phone',width:100,halign:'center'">联系电话</th>
+                <th data-options="field:'organize',width:100,halign:'center'">所在部门</th>
+                <th data-options="field:'role',width:100,halign:'center'">角色</th>
+                <th data-options="field:'lasttime',width:100,halign:'center'">最后登录时间</th>
+                <th data-options="field:'creator',width:100,halign:'center'">创建人</th>
+                <th data-options="field:'creattime',width:100,halign:'center'">创建时间</th>
 			</tr>
 		</thead>
 	</table>
@@ -67,7 +66,7 @@
 	    })
 	    //刷新
 	    function thisReload() {
-	        window.location = "JS_Manager.aspx";
+	        window.location = "YG_Manager.aspx";
 	    }
 
 	    function onDblClickCell(rowIndex, field, value) {
@@ -95,7 +94,7 @@
 	        }
 	    }
 
-        //修改权限名称
+	    //修改权限名称
 	    function updateName() {
 	        if ($("#isaddorupdate").val() == "update") {
 	            yocom.ajax({
@@ -131,16 +130,38 @@
 	                    }
 	                }
 	            });
-            }
-        }
-
-        //增加角色
-        function append() {
-            $("#isaddorupdate").val("add");
-            $("#title").val("新角色");
-            $('#w').window('open');
+	        }
 	    }
-        //移除角色
+
+	    //增加账号
+	    function append() {
+	        $("#isaddorupdate").val("add");
+
+	        $("#bmtxt").combotree({
+	            url: "Action/Handler.ashx?cmd=GetBMTree",
+	            method: "get",
+	            width: 200,
+	            onLoadSuccess: function () {
+	                $('#bmtxt').combotree('setValue', 1);
+	            }
+	        });
+
+	        $('#jstxt').combobox({
+	            valueField: 'id',
+	            textField: 'text',
+	            url: "Action/Handler.ashx?cmd=GetJSList",
+	            method: 'get',
+	            multiple: true,
+	            panelHeight: 'auto',
+	            width: 200,
+	            onLoadSuccess: function () {
+	                $('#jstxt').combobox('setValue', 1);
+	            }
+	        });
+
+	        $('#w').window('open');
+	    }
+	    //移除角色
 	    function removeit() {
 	        var node = $('#dg').datagrid('getSelected');
 	        if (node == null) {
@@ -168,11 +189,21 @@
 	</script>
     </div>
 
-    <div id="w" class="easyui-window" title="权限名称" data-options="iconCls:'icon-search',closed:true,resizable:false,minimizable:false,maximizable:false" style="width:350px;height:160px;padding:5px;">
+    <div id="w" class="easyui-window" title="员工账号信息" data-options="iconCls:'icon-search',closed:true,resizable:false,minimizable:false,maximizable:false" style="width:380px;height:230px;padding:5px;">
 		    <div class="easyui-layout" data-options="fit:true">
 			    <div data-options="region:'center'">
                 <input id="isaddorupdate" style=" display:none;" />
-                    <div style="height:30px; line-height:30px; font:16px; margin:25px 25px">角色名：<input class="textbox" id="title" type="text" name="name" style=" width:200px;height:30px; line-height:30px; font:16px;" /></div>
+                    <div class="edituser">
+                        <ul>
+                            <li><span>用户名：</span><input class="textbox" id="usernametxt" type="text" name="name" /></li>
+                            <li><span>真实姓名：</span><input class="textbox" id="readnametxt" type="text" name="name"  /></li>
+                            <li><span>联系电话：</span><input class="textbox" id="phonetxt" type="text" name="name"  /></li>
+                            <li><span>所在部门：</span><input id="bmtxt" name="name" /></li>
+                            <li><span>角色：</span><input id="jstxt" class="easyui-combobox" name="js" ></li>
+                        </ul>
+                        
+                    
+                    </div>
                 </div>
 			    <div data-options="region:'south',border:false" style="text-align:right;padding:5px 0 0;">
                     <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="updateName()" style="width:80px">确认</a>

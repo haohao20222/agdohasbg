@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Text;
+using Maticsoft.BLL;
+using Maticsoft.Common;
+using Maticsoft.Model;
 
 /// <summary>
 ///YoHandler 的摘要说明
 /// </summary>
 public class YoHandler : IHttpHandler, System.Web.SessionState.IRequiresSessionState
 {
+    public Yo_User MyUser;
 
     public bool IsReusable { get { return false; } }
 
@@ -19,8 +23,25 @@ public class YoHandler : IHttpHandler, System.Web.SessionState.IRequiresSessionS
         
         // 反射方法
         string cmd =context.Request["cmd"];
-        if (cmd != "")
+        if (!string.IsNullOrEmpty(cmd))
         {
+            if (cmd != "LoginUser")
+            {
+                if (!string.IsNullOrEmpty(Tool.CookieGet("YoUserID")))
+                {
+                    MyUser = Yo_UserBLL.GetModel(Convert.ToInt32(Tool.CookieGet("YoUserID")));
+                    if (MyUser.IsLock)
+                    {
+                        context.Response.Write("{\"flag\":\"false\",\"msg\":\"用户被锁定。\"}");
+                        return;
+                    }
+                }
+                else
+                {
+                    context.Response.Write("{\"flag\":\"false\",\"msg\":\"未登录\"}");
+                    return;
+                }
+            }
             System.Reflection.MethodInfo Remethod = this.GetType().GetMethod(cmd);
             if (Remethod != null) { Remethod.Invoke(this, new object[] { context }); }
         }

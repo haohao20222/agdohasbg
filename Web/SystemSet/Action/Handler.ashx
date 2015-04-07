@@ -87,6 +87,7 @@ public class Handler : YoHandler
             return;
         }
     }
+
     //获取子部门ID
     private string GetChildrenBMid(int fid)
     {
@@ -103,6 +104,62 @@ public class Handler : YoHandler
         else
         {
             return fid.ToString();
+        }
+    }
+    //获取部门树结果
+    public void GetBMTree(HttpContext context)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("[");
+       
+        sb.Append(GetChildrenBM(0));
+
+        sb.Append("]");
+        context.Response.Write(sb.ToString());
+    }
+    //获取子部门
+    private string GetChildrenBM(int fid)
+    {
+        List<Yo_Organize> yOrganizeList = Yo_OrganizeBLL.GetModelList("FatherOrganize = " + fid);
+        StringBuilder sb = new StringBuilder();
+        
+        if (yOrganizeList.Count > 0)
+        {
+            int i = 0;
+            foreach (Yo_Organize oItem in yOrganizeList)
+            {
+                if (Yo_OrganizeBLL.GetModelList("FatherOrganize = " + oItem.ID).Count <= 0)
+                {
+                    if (i != 0)
+                    {
+                        sb.Append(",");
+                    }
+                    sb.Append("{");
+                    sb.Append("\"id\":" + oItem.ID + ",");
+                    sb.Append("\"text\":\"" + oItem.OrganizeName + "\"");
+                    sb.Append("}");
+                }
+                else
+                {
+                    if (i != 0)
+                    {
+                        sb.Append(",");
+                    }
+                    sb.Append("{"); 
+                    sb.Append("\"id\":" + oItem.ID + ",");
+                    sb.Append("\"text\":\"" + oItem.OrganizeName + "\"");
+                    sb.Append(",\"children\":[");
+                    sb.Append(GetChildrenBM(oItem.ID));
+                    sb.Append("]");
+                    sb.Append("}");
+                }
+                i++;
+            }
+            return sb.ToString();
+        }
+        else
+        {
+            return "";
         }
     }
     //编辑部门
@@ -307,7 +364,55 @@ public class Handler : YoHandler
             return;
         }
     }
+    
+    //获取角色下拉数据  
+    public void GetJSList(HttpContext context)
+    {
+        List<Yo_Role> rList = Yo_RoleBLL.GetModelList("");
+        StringBuilder sb = new StringBuilder();
+        sb.Append("[");
+        int i = 0;
+        foreach (Yo_Role rItem in rList)
+        {
+            if (i != 0)
+            {
+                sb.Append(",");
+            }
+            sb.Append("{");
+            
+            i++;
+            sb.Append("[");
+  //          [{
+//    "id":1,
+//    "text":"Java",
+//    "desc":"Write once, run anywhere"
+//},{
+//    "id":2,
+//    "text":"C#",
+//    "desc":"One of the programming languages designed for the Common Language Infrastructure"
+//},{
+//    "id":3,
+//    "text":"Ruby",
+//    "selected":true,
+//    "desc":"A dynamic, reflective, general-purpose object-oriented programming language"
+//},{
+//    "id":4,
+//    "text":"Perl",
+//    "desc":"A high-level, general-purpose, interpreted, dynamic programming language"
+//},{
+//    "id":5,
+//    "text":"Basic",
+//    "desc":"A family of general-purpose, high-level programming languages"
+//}]
+        }
+    }
+    
     #endregion
 
+    #region 员工
+
+
+
+    #endregion
 
 }
