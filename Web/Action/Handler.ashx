@@ -54,6 +54,8 @@ public class Handler : YoHandler
         Tool.CookieWrite("YoUserName", user.UserName);
         Tool.CookieWrite("YoRoleList", UserManager.GetRoleIDList(user)); 
         Tool.CookieWrite("YoJurisdictionList", UserManager.GetJurisdictionIDList(user));
+        user.LastLoginTime = DateTime.Now;
+        Yo_UserBLL.Update(user);
         
         context.Response.Write("{\"flag\":\"true\",\"msg\":\"登陆成功\"}");
     }

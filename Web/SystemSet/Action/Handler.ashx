@@ -111,7 +111,7 @@ public class Handler : YoHandler
     {
         StringBuilder sb = new StringBuilder();
         sb.Append("[");
-       
+
         sb.Append(GetChildrenBM(0));
 
         sb.Append("]");
@@ -122,7 +122,7 @@ public class Handler : YoHandler
     {
         List<Yo_Organize> yOrganizeList = Yo_OrganizeBLL.GetModelList("FatherOrganize = " + fid);
         StringBuilder sb = new StringBuilder();
-        
+
         if (yOrganizeList.Count > 0)
         {
             int i = 0;
@@ -145,7 +145,7 @@ public class Handler : YoHandler
                     {
                         sb.Append(",");
                     }
-                    sb.Append("{"); 
+                    sb.Append("{");
                     sb.Append("\"id\":" + oItem.ID + ",");
                     sb.Append("\"text\":\"" + oItem.OrganizeName + "\"");
                     sb.Append(",\"children\":[");
@@ -290,7 +290,7 @@ public class Handler : YoHandler
                 }
         }
     }
-
+    //更新角色
     private string UpdateJSRole(List<int> jlist, string value, Yo_Role rItem)
     {
         if (value == "√")
@@ -364,7 +364,7 @@ public class Handler : YoHandler
             return;
         }
     }
-    
+
     //获取角色下拉数据  
     public void GetJSList(HttpContext context)
     {
@@ -379,40 +379,120 @@ public class Handler : YoHandler
                 sb.Append(",");
             }
             sb.Append("{");
-            
+            sb.Append("\"id\":" + rItem.ID + ",\"text\":\"" + rItem.RoleName + "\"");
+            sb.Append("}");
+
             i++;
-            sb.Append("[");
-  //          [{
-//    "id":1,
-//    "text":"Java",
-//    "desc":"Write once, run anywhere"
-//},{
-//    "id":2,
-//    "text":"C#",
-//    "desc":"One of the programming languages designed for the Common Language Infrastructure"
-//},{
-//    "id":3,
-//    "text":"Ruby",
-//    "selected":true,
-//    "desc":"A dynamic, reflective, general-purpose object-oriented programming language"
-//},{
-//    "id":4,
-//    "text":"Perl",
-//    "desc":"A high-level, general-purpose, interpreted, dynamic programming language"
-//},{
-//    "id":5,
-//    "text":"Basic",
-//    "desc":"A family of general-purpose, high-level programming languages"
-//}]
         }
+        sb.Append("]");
+        context.Response.Write(sb.ToString());
+        return;
     }
-    
+
     #endregion
 
     #region 员工
+    //员工列表
+    public void GetYGDataList(HttpContext context)
+    {
+        int total = Yo_UserBLL.GetRecordCount("");
 
+        StringBuilder sb = new StringBuilder();
+        sb.Append("{\"total\":" + total + ",\"rows\":[");
 
+        List<Yo_User> userList = Yo_UserBLL.GetModelList("");
+        foreach (Yo_User rItem in userList)
+        {
+            sb.Append("{");
+            sb.Append("\"id\":" + rItem.ID + ",");
+            sb.Append("\"username\":\"" + rItem.UserName + "\",");
+            sb.Append("\"readname\":\"" + rItem.ReadName + "\",");
+            sb.Append("\"phone\":\"" + rItem.Phone + "\",");
+            sb.Append("\"organize\":\"" + GetYGOrganizeName(rItem.OrganizeID) + "\",");
+            sb.Append("\"role\":\"" + GetYGRoleNameList(rItem.RoleIDList) + "\",");
+            sb.Append("\"lasttime\":\"" + rItem.LastLoginTime.ToString("yyyy-MM-dd HH:mm") + "\",");
+            sb.Append("\"creator\":\"" + rItem.Creator + "\",");
+            sb.Append("\"creattime\":\"" + rItem.CreatTime.ToString("yyyy-MM-dd HH:mm") + "\"");
+            sb.Append("},");
+        }
+        sb.Remove(sb.Length - 1, 1);
+        sb.Append("]}");
+        context.Response.Write(sb.ToString());
+    }
+    //获取角色名称
+    public string GetYGRoleNameList(string roleIdList)
+    {
+        string[] ridList = roleIdList.Trim(',').Split(',');
+        string resultString = "";
+        foreach (string rid in ridList)
+        {
+            int id = 0;
+            int.TryParse(rid, out id);
+            Yo_Role r = Yo_RoleBLL.GetModel(id);
+            if (r != null)
+            {
+                resultString += r.RoleName + ",";
+            }
+        }
+        resultString = resultString.Trim(',');
+        return resultString;
+    }
+    //获取员工组织名称
+    public string GetYGOrganizeName(int OrganizeID)
+    {
+        Yo_Organize o = Yo_OrganizeBLL.GetModel(OrganizeID);
+        if (o != null)
+        {
+            return o.OrganizeName;
+        }
+        return "";
+    }
+    //增加员工
+    public void AddYG(HttpContext context)
+    {
+        string username = context.Request["username"];
+        string readname = context.Request["readname"];
+        string phone = context.Request["phone"];
+        int bm = 0;
+        int.TryParse(context.Request["bm"], out bm);
+        string jsIdlist = context.Request["js"].Trim(',');
+        Yo_User user = Yo_UserBLL.GetModel(username);
+        if (user != null)
+        {
+            context.Response.Write("{\"flag\":\"false\",\"msg\":\"无法添加该用户，用户名已存在。\"}");
+            return;
+        }
+        Yo_Organize o = Yo_OrganizeBLL.GetModel(bm);
+        if(o==null)
+        {
+            context.Response.Write("{\"flag\":\"false\",\"msg\":\"无法添加该用户，部门选择有误。\"}");
+            return;
+        }
+        user = new Yo_User();
+        user.Creator = Tool.CookieGet("YoUserName");
+        user.CreatorID = Convert.ToInt32(Tool.CookieGet("YoUserID"));
+        user.CreatTime = DateTime.Now;
+        user.IsLock = false;
+        user.LastLoginTime = user.CreatTime;
+        user.OrganizeID = bm;
+        user.OrganizeName = o.OrganizeName;
+        user.Phone = phone;
+        user.ReadName = readname;
+        user.RoleIDList = jsIdlist;
+        user.UserName = username;
+        user.UserPassword = HashEncode.MD5("123456");
 
+        int id = Yo_UserBLL.Add(user);
+        if (Yo_UserBLL.GetModel(id) != null)
+        {
+            context.Response.Write("{\"flag\":\"true\",\"msg\":\"添加成功\"}");
+        }
+        else
+        {
+            context.Response.Write("{\"flag\":\"false\",\"msg\":\"数据处理失败\"}");
+        }
+        
+    }
     #endregion
 
 }

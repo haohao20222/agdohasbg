@@ -33,7 +33,7 @@
 				toolbar: '#tb',
 				method: 'get',
 				onDblClickCell: onDblClickCell,
-                url:'Action/Handler.ashx?cmd=GetJSDataList'
+                url:'Action/Handler.ashx?cmd=GetYGDataList'
 			">
 		<thead>
 			<tr>
@@ -41,11 +41,11 @@
 				<th data-options="field:'username',width:100,halign:'center'">用户名</th>
 				<th data-options="field:'readname',width:100,halign:'center'">真实姓名</th>
                 <th data-options="field:'phone',width:100,halign:'center'">联系电话</th>
-                <th data-options="field:'organize',width:100,halign:'center'">所在部门</th>
-                <th data-options="field:'role',width:100,halign:'center'">角色</th>
-                <th data-options="field:'lasttime',width:100,halign:'center'">最后登录时间</th>
+                <th data-options="field:'organize',width:200,halign:'center'">所在部门</th>
+                <th data-options="field:'role',width:200,halign:'center'">角色</th>
+                <th data-options="field:'lasttime',width:110,halign:'center'">最后登录时间</th>
                 <th data-options="field:'creator',width:100,halign:'center'">创建人</th>
-                <th data-options="field:'creattime',width:100,halign:'center'">创建时间</th>
+                <th data-options="field:'creattime',width:110,halign:'center'">创建时间</th>
 			</tr>
 		</thead>
 	</table>
@@ -115,10 +115,19 @@
 	            });
 	        }
 	        else {
+	            var array_of_checked_values = $("#jstxt").combobox("getValues");
+	            var jsIdList = "";
+                for(item in array_of_checked_values) {
+                    jsIdList += item.id+",";
+                }
 	            yocom.ajax({
-	                url: "Action/Handler.ashx?cmd=AddJS",
+	                url: "Action/Handler.ashx?cmd=AddYG",
 	                data: {
-	                    "value": $("#title").val()
+	                    "username": $("#usernametxt").val(),
+	                    "readname": $("#readnametxt").val(),
+	                    "phone": $("#phonetxt").val(),
+	                    "bm": $("#bmtxt").combotree("tree").tree('getSelected').id,
+	                    "js": jsIdList
 	                },
 	                success: function (data) {
 	                    if (data.flag == "true") {
@@ -149,13 +158,14 @@
 	        $('#jstxt').combobox({
 	            valueField: 'id',
 	            textField: 'text',
+	            editable: false,
 	            url: "Action/Handler.ashx?cmd=GetJSList",
 	            method: 'get',
 	            multiple: true,
 	            panelHeight: 'auto',
 	            width: 200,
 	            onLoadSuccess: function () {
-	                $('#jstxt').combobox('setValue', 1);
+	               // $('#jstxt').combobox('setValue', 1);
 	            }
 	        });
 
