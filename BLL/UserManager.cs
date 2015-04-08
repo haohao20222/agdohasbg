@@ -13,6 +13,11 @@ namespace Maticsoft.BLL
         /// </summary>
         public static string GetJurisdictionIDList(Yo_User user)
         {
+            if (GetRoleIDList(user) == "")
+            {
+                return "";
+            }
+
             List<Yo_Role> rList = Yo_RoleBLL.GetModelList("ID in (" + GetRoleIDList(user) + ")");
 
             string result = "";
@@ -25,7 +30,7 @@ namespace Maticsoft.BLL
             {
                 foreach (Yo_Role rItem in rList)
                 {
-                   result += "," + rItem.JurisdictionIDList.Trim(',');
+                    result += "," + rItem.JurisdictionIDList.Trim(',');
                 }
                 return result.Trim(',');
             }
@@ -33,8 +38,15 @@ namespace Maticsoft.BLL
         }
         public static List<Yo_Jurisdiction> GetJurisdictionList(string jurisdictionIDList)
         {
-            List<Yo_Jurisdiction> result = Yo_JurisdictionBLL.GetModelList("ID IN (" + jurisdictionIDList + ")");
-            return result;
+            if (jurisdictionIDList == "")
+            {
+                return new List<Yo_Jurisdiction>();
+            }
+            else
+            {
+                List<Yo_Jurisdiction> result = Yo_JurisdictionBLL.GetModelList("ID IN (" + jurisdictionIDList + ")");
+                return result;
+            }
         }
         /// <summary>
         /// 获取角色ID列表

@@ -463,7 +463,7 @@ public class Handler : YoHandler
             return;
         }
         Yo_Organize o = Yo_OrganizeBLL.GetModel(bm);
-        if(o==null)
+        if (o == null)
         {
             context.Response.Write("{\"flag\":\"false\",\"msg\":\"无法添加该用户，部门选择有误。\"}");
             return;
@@ -491,8 +491,44 @@ public class Handler : YoHandler
         {
             context.Response.Write("{\"flag\":\"false\",\"msg\":\"数据处理失败\"}");
         }
-        
+
     }
+
+    public void GetYGItem(HttpContext context)
+    {
+        int itemid = 0;
+        int.TryParse(context.Request["itemid"], out itemid);
+        Yo_User u = Yo_UserBLL.GetModel(itemid);
+        if (u == null)
+        {
+            context.Response.Write("{\"flag\":\"false\",\"msg\":\"找不到数据。请刷新页面重试\"}");
+            return;
+        }
+        string roleIdTemp ="";
+        string[] roleIDList = u.RoleIDList.Split(',');
+        foreach (string role in roleIDList)
+        { 
+            int id = 0;
+            int.TryParse(role,out id);
+            if (Yo_RoleBLL.GetModel(id) != null)
+            {
+                roleIdTemp += id+",";
+            }
+        }
+        roleIdTemp = roleIdTemp.Trim(',');
+        StringBuilder sb = new StringBuilder();
+        sb.Append("{\"flag\":\"true\",\"msg\":\"读取成功\",\"item\":");
+        sb.Append("{");
+        sb.Append("\"id\":" + u.ID + ",");
+        sb.Append("\"username\":\"" + u.UserName + "\",");
+        sb.Append("\"readname\":\"" + u.ReadName + "\",");
+        sb.Append("\"phone\":\"" + u.Phone + "\",");
+        sb.Append("\"bm\":\"" + u.OrganizeID + "\",");
+        sb.Append("\"js\":\"" + roleIdTemp + "\"");
+        sb.Append("}}");
+        context.Response.Write(sb.ToString());
+    }
+
     #endregion
 
 }

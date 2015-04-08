@@ -70,28 +70,47 @@
 	    }
 
 	    function onDblClickCell(rowIndex, field, value) {
-	        if (field == "name") {
-	            $("#isaddorupdate").val("update");
-	            $("#title").val(value);
-	            $('#w').window('open');
-	        }
-	        else {
-	            yocom.ajax({
-	                url: "Action/Handler.ashx?cmd=EditJS",
-	                data: {
-	                    "itemid": $('#dg').datagrid('getSelected').id,
-	                    "field": field,
-	                    "value": value
-	                },
-	                success: function (data) {
-	                    if (data.flag == "true") {
-	                        $('#dg').datagrid('reload');
-	                    } else {
-	                        $.messager.alert('失败', data.msg);
-	                    }
+	        yocom.ajax({
+	            url: "Action/Handler.ashx?cmd=GetYGItem",
+	            data: {
+	                "itemid": $('#dg').datagrid('getSelected').id
+	            },
+	            success: function (data) {
+	                if (data.flag == "true") {
+	                    $("#isaddorupdate").val("update");
+
+	                    $("#bmtxt").combotree({
+	                        url: "Action/Handler.ashx?cmd=GetBMTree",
+	                        method: "get",
+	                        width: 200,
+	                        onLoadSuccess: function () {
+	                            $('#bmtxt').combotree('setValue', data.item.bm);
+	                        }
+	                    });
+
+	                    $('#jstxt').combobox({
+	                        valueField: 'id',
+	                        textField: 'text',
+	                        editable: false,
+	                        url: "Action/Handler.ashx?cmd=GetJSList",
+	                        method: 'get',
+	                        multiple: true,
+	                        panelHeight: 'auto',
+	                        width: 200,
+	                        onLoadSuccess: function () {
+	                            $('#jstxt').combobox('setValues', data.item.js);
+	                        }
+	                    });
+
+	                    $("#usernametxt").val(data.item.username);
+	                    $("#readnametxt").val(data.item.readname);
+	                    $("#phonetxt").val(data.item.phone);
+	                    $('#w').window('open');
+	                } else {
+	                    $.messager.alert('失败', data.msg);
 	                }
-	            });
-	        }
+	            }
+            })
 	    }
 
 	    //修改权限名称
@@ -117,9 +136,9 @@
 	        else {
 	            var array_of_checked_values = $("#jstxt").combobox("getValues");
 	            var jsIdList = "";
-                for(item in array_of_checked_values) {
-                    jsIdList += item.id+",";
-                }
+	            for (var i = 0; i < array_of_checked_values.length; i++) {
+	                jsIdList += array_of_checked_values[i] + ",";
+	            }
 	            yocom.ajax({
 	                url: "Action/Handler.ashx?cmd=AddYG",
 	                data: {
@@ -132,7 +151,6 @@
 	                success: function (data) {
 	                    if (data.flag == "true") {
 	                        $('#w').window('close');
-
 	                        $('#dg').datagrid('reload');
 	                    } else {
 	                        $.messager.alert('失败', data.msg);
@@ -165,10 +183,13 @@
 	            panelHeight: 'auto',
 	            width: 200,
 	            onLoadSuccess: function () {
-	               // $('#jstxt').combobox('setValue', 1);
+	                //$('#jstxt').combobox('setValues', '1,3');
 	            }
 	        });
 
+	        $("#usernametxt").val("");
+	        $("#readnametxt").val("");
+	        $("#phonetxt").val("");
 	        $('#w').window('open');
 	    }
 	    //移除角色
